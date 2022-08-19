@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useState} from "react";
+import axios from 'axios'
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -12,6 +13,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardAvatar from "components/Card/CardAvatar.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
+import { useHistory } from "react-router-dom";
 
 import avatar from "assets/img/faces/marc.jpg";
 
@@ -34,10 +36,40 @@ const styles = {
   },
 };
 
+const initialValues = {
+  empresa:'',
+  nomeUsuario:'',
+  email:'',
+  primeiroNome:'',
+  ultimoNome:'',
+  cidade:'',
+  pais:'',
+  cep:''  
+}
+
 const useStyles = makeStyles(styles);
 
 export default function UserProfile() {
+  const [values, setValues] = useState(initialValues);
+  const history = useHistory();
+
+  function onChange(ev){
+    const {id, value} = ev.target;
+    setValues({... initialValues, [id]: value});
+    console.log(ev.target)
+  
+  }
+
+  function onSubmit(ev){
+    ev.preventDefault();
+    axios.post('http://localhost:8080/worker/workers/save', initialValues)
+    .then((response) =>{
+      history.push('/')
+    });
+  }
+
   const classes = useStyles();
+
   return (
     <div>
       <GridContainer>
@@ -51,81 +83,97 @@ export default function UserProfile() {
               <GridContainer>
                 <GridItem xs={12} sm={12} md={5}>
                   <CustomInput
+                    name="empresa"
                     labelText="Empresa"
-                    id="company-disabled"
+                    id="empresa"
                     formControlProps={{
                       fullWidth: true,
                     }}
                     inputProps={{
                       disabled: false,
                     }}
+                    onChange={onChange}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={3}>
                   <CustomInput
+                    name="usuario"
                     labelText="Nome de usuário"
-                    id="username"
+                    id="usuario"
                     formControlProps={{
                       fullWidth: true,
                     }}
+                    onChange={onChange}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
+                    name="email"
                     labelText="Email "
-                    id="email-address"
+                    id="email"
                     formControlProps={{
                       fullWidth: true,
                     }}
+                    onChange={onChange}
                   />
                 </GridItem>
               </GridContainer>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
+                    name="primeiroNome"
                     labelText="Primeiro Nome"
-                    id="first-name"
+                    id="primeiroNome"
                     formControlProps={{
                       fullWidth: true,
                     }}
+                    onChange={onChange}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
+                    name="ultimoNome"
                     labelText="Último Nome"
-                    id="last-name"
+                    id="ultimoNome"
                     formControlProps={{
                       fullWidth: true,
                     }}
+                    onChange={onChange}
                   />
                 </GridItem>
               </GridContainer>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
+                    name="cidade"
                     labelText="Cidade"
-                    id="city"
+                    id="cidade"
                     formControlProps={{
                       fullWidth: true,
                     }}
+                    onChange={onChange}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
+                    name="pais"
                     labelText="País"
-                    id="country"
+                    id="pais"
                     formControlProps={{
                       fullWidth: true,
                     }}
+                    onChange={onChange}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
+                    name="cep"
                     labelText="CEP"
-                    id="postal-code"
+                    id="cep"
                     formControlProps={{
                       fullWidth: true,
                     }}
+                    onChange={onChange}
                   />
                 </GridItem>
               </GridContainer>
@@ -142,12 +190,13 @@ export default function UserProfile() {
                       multiline: true,
                       rows: 5,
                     }}
+                    onChange={onChange}
                   />
                 </GridItem>
               </GridContainer>
             </CardBody>
             <CardFooter>
-              <Button color="primary">Salvar</Button>
+              <Button color="primary" onClick={onSubmit}>Salvar</Button>
             </CardFooter>
           </Card>
         </GridItem>

@@ -25,6 +25,7 @@ import Login from "views/Login/Login.js";
 import Cadastro from "views/Cadastro/Cadastro.js"
 
 import "assets/css/material-dashboard-react.css?v=1.10.0";
+import Listagem from "views/Listagem/Listagem";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -32,6 +33,7 @@ ReactDOM.render(
       <Route path="/admin" component={Admin} />
       <Route path="/login" component={Login} />
       <Route path="/cadastro" component={Cadastro} />
+      <Route path="/table" component={Listagem} />
       <Redirect to="/login" />
     </Switch>
   </BrowserRouter>,

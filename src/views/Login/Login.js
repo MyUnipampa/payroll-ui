@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, useEffect, useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -15,6 +15,8 @@ import CardFooter from "components/Card/CardFooter.js";
 
 import avatar from "assets/img/faces/marc.jpg";
 import dashboardRoutes from "routes";
+import api from "Api";
+import { keys } from "@material-ui/core/styles/createBreakpoints";
 
 const styles = {
   cardCategoryWhite: {
@@ -37,10 +39,11 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-
 export default function Login(){
+
     const classes = useStyles();
     return(
+      
         <GridContainer>
           <GridItem xs={12} sm={12} md={12}>
             <Card>
@@ -83,3 +86,71 @@ export default function Login(){
       
     );
 }
+
+
+
+// //#################################################
+// // consumo de api baseado em classe
+// class Login extends Component{
+
+//   state= {
+//     workers: [],
+//   }
+
+//   async componentDidMount(){
+//     const response = await api.get('');
+//     this.setState({workers: response.data});
+//   }
+
+//   render(){
+
+//     const {workers} = this.state;
+
+//     return(
+//       <div>
+//         <h1>Listar</h1>
+//         {console.log(workers)}
+//         {workers.map(worker =>(
+//           <li key={worker.id}>
+//               {worker.name}
+//           </li>
+//         ))}
+        
+//       </div>
+//     )
+//   }
+// }
+// //###############################################
+
+
+// export default Login
+
+// <><><><><><><><><><><><><><><><><><><><><><><><><>
+// Com funcao
+
+// export default function Login(){
+//   const [workers, setWorker] = useState([]);
+
+//   useEffect(()=>{
+//     api.get('worker/workers').then(({data})=> {
+//       setWorker(data);
+//     })
+//     console.log(workers)
+//     // eslint-disable-next-line
+//   }, []);
+
+  
+//   return(
+//     <div>
+//       <h1>Listar</h1>     
+//       {workers?.map((worker) => (
+//         <li key={worker.id}>
+//             {worker}
+//         </li>
+
+//       ))}   
+//     </div>
+//   )
+// }
+
+// <><><><><><><><><><><><><><><><><><><><><><><><><>
